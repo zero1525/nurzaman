@@ -14,6 +14,7 @@ class User(AbstractUser, PermissionsMixin):
 
     ROLE_CHOICES = (
         ('admin', 'Администратор'),
+        
         ('user', 'Пользователь'),
         ('manager', 'Менеджер'),
         ('support', 'Служба поддержки'),

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,15 +21,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-pm4@v!ye1(0@48!nc&3t89m&ide46a(ux6&9c9$fnsu5b2@dpt'
+from decouple import config
+
+SECRET_KEY = config('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['Zero0989.pythonanywhere.com']
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 
-# Application definition
+
+ALLOWED_HOSTS = []
+
+
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -73,15 +79,28 @@ TEMPLATES = [
 WSGI_APPLICATION = 'NURZAMAN.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if USE_POSTGRES:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'postgres1',
+            'USER': 'postgres',
+            'PASSWORD': '0526',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+
 
 
 # Password validation
@@ -155,5 +174,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 
 EMAIL_HOST_USER = 'zerom0989@gmail.com'
-EMAIL_HOST_PASSWORD = 'cxmi sfox ipoc dwja'
+EMAIL_HOST_PASSWORD = ''
 DEFAULT_FROM_EMAIL = 'zerom0989@gmail.com'
